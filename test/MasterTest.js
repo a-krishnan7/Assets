@@ -1,20 +1,24 @@
-var MetaCoin = artifacts.require("./MetaCoin.sol");
+var Master = artifacts.require("./Master.sol");
 
-contract('MetaCoin', function(accounts) {
-  it("should put 10000 MetaCoin in the first account", function() {
-    return MetaCoin.deployed().then(function(instance) {
-      return instance.getBalance.call(accounts[0]);
+contract('Master', function(accounts) {
+
+  it("should put 10 Ether in the first account", function() {
+    var M = Master.at(Master.deployed_address);
+    return Master.deployed().then(function(instance) {
+      return instance.addFunds.call.value(10)(accounts[0]);
     }).then(function(balance) {
-      assert.equal(balance.valueOf(), 10000, "10000 wasn't in the first account");
+      assert.equal(balance.valueOf(), 10, "10 wasn't in the first account");
     });
   });
-  it("should call a function that depends on a linked library", function() {
+});
+
+  /* it("should call a function that depends on a linked library", function() {
     var meta;
     var metaCoinBalance;
     var metaCoinEthBalance;
 
     return MetaCoin.deployed().then(function(instance) {
-      meta = instance;8
+      meta = instance;
       return meta.getBalance.call(accounts[0]);
     }).then(function(outCoinBalance) {
       metaCoinBalance = outCoinBalance.toNumber();
@@ -29,7 +33,7 @@ contract('MetaCoin', function(accounts) {
   it("should send coin correctly", function() {
     var meta;
 
-    // Get initial balances of first and second account.
+    //    Get initial balances of first and second account.
     var account_one = accounts[0];
     var account_two = accounts[1];
 
@@ -61,4 +65,4 @@ contract('MetaCoin', function(accounts) {
       assert.equal(account_two_ending_balance, account_two_starting_balance + amount, "Amount wasn't correctly sent to the receiver");
     });
   });
-});
+}); */

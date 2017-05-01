@@ -97,10 +97,10 @@
 		function Master(){
 			admin = msg.sender; //So far the admin has no special powers....
 			MasterContractAddress = this;
-
+			MatchfailFunds(this, "asdfasdfasdfasdf");
 		}
 
-		function getMasterAddress() returns (address) {
+		function getMasterAddress() public returns (address) {
 			return this;
 		}
 
