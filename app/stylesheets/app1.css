@@ -130,6 +130,10 @@ button {
   text-align: center;
 }
 
+#adder1 {
+  width: 50%;
+}
+
 #status {
   font-family: 'Helvetica', sans-serif;
   font-weight: bold;
@@ -234,6 +238,7 @@ button {
 #myBodyStuff {
   margin-left: 5%;
   margin-right: 5%;
+  width: 70%;
 }
 
 /* Change the color of links on hover */
@@ -289,6 +294,7 @@ button {
   padding: 12px 30px;
   padding-left: 42px;
   background-color: #FFC300;
+  border: 1px solid #888;
 }
 #orderTable thead tr th span { 
   padding-right: 20px;

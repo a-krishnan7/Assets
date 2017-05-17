@@ -83,7 +83,65 @@ window.App = {
 
    orderContract2: function() {
     var self = this;
-    self.setStatus("Order Complete.");
+    var option;
+    var calladdr;
+    var putaddr;
+
+    var BilAddress = "0x3c13f0957168aad739fe14fa659bbe8777ff7148";
+    var address = [BilAddress, calladdr, putaddr];
+    var callhash = BilAddress;
+    var puthash = BilAddress;
+    var expr = 1496188800;
+    var upper = 105;
+    var lower = 95;
+
+    var prices = [upper, lower, 105, 95, 10];
+
+    Master.defaults({
+      from: account,
+      gas: 1000000,
+      gasPrice: 100,
+      value: 0
+    });
+    self.setStatus("Initializing order.");
+
+    Master.deployed().then(function(instance) {
+      option = instance;
+      return option.AddAgreement(address, callhash, puthash, expr, prices, "AAPL", {from: account});
+    }).then(function() {
+      self.setStatus("Order complete!");
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error completing order.");
+    }); 
+  },
+
+   setTrueStatus: function(message) {
+    var trueStatus = document.getElementById("trueStatus");
+    trueStatus.innerHTML = message;
+  },
+
+   addFunds2: function() {
+    var self = this;
+    var option;
+
+    Master.defaults({
+      from: account,
+      gas: 1000000,
+      gasPrice: 100,
+      value: 0
+    });
+
+    Master.deployed().then(function(instance) {
+      option = instance;
+      console.log(option.getMasterAddress({from : account}));
+      return option.addFunds({from: account});
+    }).then(function() {
+      //self.setTrueStatus("Funds added.");
+    }).catch(function(e) {
+      console.log(e);
+      //self.setTrueStatus("Funds could not be added.");
+    }); 
    },
 
     orderContract: function() {
@@ -99,7 +157,7 @@ window.App = {
     var address = [BilAddress, calladdr, putaddr];
     var callhash = BilAddress;
     var puthash = BilAddress;
-    var opt = document.getElementById("option").value;
+    var opt = document.getElementById("option").innerHTML;
     var expr = document.getElementById("expiration").innerHTML;
     var strike = document.getElementById("strike").innerHTML;
     var price = parseInt(document.getElementById("price").value);
@@ -107,7 +165,7 @@ window.App = {
 
     var prices = [upper, lower, 105, 95, 10];
 
-    this.setStatus("Initiating order... (please wait)");
+    //this.setStatus("Initiating order... (please wait)");
     var table;
     if (opt == "Type: Put") {
       table = document.getElementById("putOrders");
@@ -123,8 +181,9 @@ window.App = {
     cell2.innerHTML = strike;
     cell3.innerHTML = price;
     cell4.innerHTML = quantity;
+    row.onclick = function() { row.remove();self.setStatus("Order matched!")};
 
-    var option;
+    /*var option;
 
     Master.defaults({
       from: account,
@@ -141,7 +200,7 @@ window.App = {
     }).catch(function(e) {
       console.log(e);
       self.setStatus("Error completing order.");
-    }); 
+    }); */
   },
 };
 
