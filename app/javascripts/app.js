@@ -103,6 +103,7 @@ window.App = {
       gasPrice: 100,
       value: 0
     });
+
     self.setStatus("Initializing order.");
 
     Master.deployed().then(function(instance) {
